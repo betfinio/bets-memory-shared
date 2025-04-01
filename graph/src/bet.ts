@@ -27,7 +27,7 @@ export function handleSetResult(call: ethereum.Call): void {
   }
   // if fee type is 1, subs result to revenue
   if (game.feeType.equals(BigInt.fromI32(1))) {
-    game.revenue = game.revenue.minus(bet.result);
+    game.revenue = game.revenue.plus(bet.amount).minus(bet.result);
   }
   game.save();
   stat.save();
