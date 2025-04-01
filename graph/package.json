@@ -1,0 +1,19 @@
+{
+	"name": "@betfinio/template-shared",
+	"scripts": {
+		"codegen": "graph codegen",
+		"build:dev": "graph build --network polygon-amoy",
+		"build:prod": "graph build --network matic",
+		"build:silent": "graph build",
+		"deploy:dev": "graph deploy --node https://api.studio.thegraph.com/deploy/ template-shared --network polygon-amoy",
+		"deploy:prod": "graph deploy --node https://api.studio.thegraph.com/deploy/ template-shared --network matic",
+		"test": "graph test"
+	},
+	"dependencies": {
+		"@graphprotocol/graph-cli": "^0.94.0",
+		"@graphprotocol/graph-ts": "^0.37.0"
+	},
+	"devDependencies": {
+		"matchstick-as": "^0.6.0"
+	}
+}
