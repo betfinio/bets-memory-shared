@@ -1,4 +1,33 @@
-type Example @entity {
-    id: Bytes!
-    data: BigInt
+type Bet @entity(immutable: true) {
+	id: Bytes!
+	bet: Bytes! # address
+	player: Player!
+	game: Game!
+	status: BigInt!
+	amount: BigInt!
+	result: BigInt!
+	blockNumber: BigInt!
+	blockTimestamp: BigInt!
+	transactionHash: Bytes!
+}
+
+type Player @entity {
+	id: Bytes!
+	address: Bytes! # address
+	betsCount: BigInt!
+	betsAmount: BigInt!
+}
+
+type Statistics @entity {
+	id: Bytes!
+	totalBets: BigInt!
+	totalVolume: BigInt!
+	totalPlayers: BigInt!
+}
+
+type Game @entity {
+	id: Bytes!
+	address: Bytes! # address
+	feeType: BigInt!
+	revenue: BigInt!
 }
