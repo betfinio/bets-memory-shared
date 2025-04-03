@@ -1,4 +1,4 @@
-type Bet @entity(immutable: true) {
+type Bet @entity {
 	id: Bytes!
 	bet: Bytes! # address
 	player: Player!

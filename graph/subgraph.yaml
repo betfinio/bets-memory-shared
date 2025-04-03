@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: BetsMemory
-    network: polygon-amoy
+    network: matic
     source:
-      address: "0x23Fc05608ec5D1aEf7f676423Cc868D27D0226c9"
       abi: BetsMemory
-      startBlock: 5932010
+      address: "0xbFC62dAc5Cc5A095F72311239a56E5d78b000777"
+      startBlock: 53904142
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -38,7 +38,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: BetTemplate
-    network: polygon-amoy
+    network: matic
     source:
       abi: BetInterface
     mapping:
