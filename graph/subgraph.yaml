@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: BetsMemory
-    network: polygon-amoy
+    network: matic
     source:
       abi: BetsMemory
       address: "0xbFC62dAc5Cc5A095F72311239a56E5d78b000777"
