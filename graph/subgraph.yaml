@@ -5,21 +5,28 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Template
+    name: BetsMemory
     network: polygon-amoy
     source:
-      abi: Token
-      address: "0xe0Ddc3d8Aabe7185C504aE6927425fD663bE86f4"
+      abi: BetsMemory
+      address: "0xbFC62dAc5Cc5A095F72311239a56E5d78b000777"
+      startBlock: 53904142
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Example
+        - NewBet
       abis:
-        - name: Token
-          file: ./abis/Token.json
+        - name: BetsMemory
+          file: ./abis/BetsMemory.json
+        - name: BetInterface
+          file: ./abis/BetInterface.json
+      blockHandlers:
+        - handler: handleOnce
+          filter:
+            kind: once
       eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/token.ts
+        - event: NewBet(indexed address,indexed address,indexed address)
+          handler: handleNewBet
+      file: ./src/bets-memory.ts

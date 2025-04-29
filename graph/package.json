@@ -1,17 +1,19 @@
 {
-	"name": "@betfinio/template-shared",
+	"name": "@betfinio/bets-memory-shared",
 	"scripts": {
 		"codegen": "graph codegen",
+		"dev": "bun run codegen && bun run build:dev && bun run deploy:dev",
+		"prod": "bun run codegen && bun run build:prod && bun run deploy:prod",
 		"build:dev": "graph build --network polygon-amoy",
 		"build:prod": "graph build --network matic",
 		"build:silent": "graph build",
-		"deploy:dev": "graph deploy --node https://api.studio.thegraph.com/deploy/ template-shared --network polygon-amoy",
-		"deploy:prod": "graph deploy --node https://api.studio.thegraph.com/deploy/ template-shared --network matic",
+		"deploy:dev": "graph deploy --node https://api.studio.thegraph.com/deploy/ bets-memory-dev --network polygon-amoy",
+		"deploy:prod": "graph deploy --node https://api.studio.thegraph.com/deploy/ bets-memory-prod --network matic",
 		"test": "graph test"
 	},
 	"dependencies": {
-		"@graphprotocol/graph-cli": "^0.94.0",
-		"@graphprotocol/graph-ts": "^0.37.0"
+		"@graphprotocol/graph-cli": "^0.97.0",
+		"@graphprotocol/graph-ts": "^0.38.0"
 	},
 	"devDependencies": {
 		"matchstick-as": "^0.6.0"
