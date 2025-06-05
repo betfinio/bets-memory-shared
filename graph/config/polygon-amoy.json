@@ -1,0 +1,10 @@
+{
+    "network": "polygon-amoy",
+    "betsMemory": {
+        "address": "0x23Fc05608ec5D1aEf7f676423Cc868D27D0226c9",
+        "startBlock": 5932014        
+    },
+    "pass": {
+        "address": "0x171d4056Fe9f72Bec8E8C59C2e4dE32cFAaAd79e"
+    }
+}

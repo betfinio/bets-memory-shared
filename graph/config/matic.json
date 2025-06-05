@@ -1,0 +1,10 @@
+{
+    "network": "matic",
+    "betsMemory": {
+        "address": "0xbFC62dAc5Cc5A095F72311239a56E5d78b000777",
+        "startBlock": 53904142
+    },
+    "pass": {
+        "address": "0xBF2E84403A7BcEA0b74Cdc1b580aE82397777777"
+    }
+}
