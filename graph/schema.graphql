@@ -23,3 +23,12 @@ type Statistics @entity(immutable: false) {
     totalVolume: BigInt!
     totalPlayers: BigInt!
 }
+
+
+type TimeFrameBetsMemoryStatistics @entity(immutable: false) {
+    id: String!
+    totalPlayers: BigInt!
+    totalMembers: BigInt!
+    timeSeriesType: String!
+    timestamp: BigInt!
+}

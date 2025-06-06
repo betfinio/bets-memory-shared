@@ -4,7 +4,9 @@ import { Bet, Player, Statistics } from "../generated/schema";
 import { BetInterface } from "../generated/BetsMemory/BetInterface";
 // biome-ignore lint/style/useImportType: not supported
 // biome-ignore lint/suspicious/noShadowRestrictedNames: shadowing
-import { BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes, dataSource, ethereum } from "@graphprotocol/graph-ts";
+import { TimeFrameBetsMemoryStatistics } from "../generated/schema";
+import { Pass } from "../generated/BetsMemory/Pass";
 
 const ID: Bytes = Bytes.fromUTF8("initial");
 
@@ -52,4 +54,62 @@ export function handleOnce(block: ethereum.Block): void {
 	stat.totalVolume = BigInt.zero();
 	stat.totalPlayers = BigInt.zero();
 	stat.save();
+}
+
+
+function getIntervalTimestamp(timestamp: BigInt, interval: string): BigInt {
+    const hour = 60 * 60;
+    const day = 24 * hour;
+    const week = 7 * day;
+
+    if (interval == "hour") {
+        return BigInt.fromI32(timestamp.toI32() / hour * hour);
+    } else if (interval == "day") {
+        return BigInt.fromI32(timestamp.toI32() / day * day);
+    } else if (interval == "week") {
+        return BigInt.fromI32(timestamp.toI32() / week * week);
+    }
+    return timestamp; // Default to raw timestamp if no match
+}
+const passAddress = Address.fromBytes(dataSource.context().getBytes("pass"));
+const pass = Pass.bind(passAddress);
+
+function savePlayersStatistics(block: ethereum.Block, interval: string): void {
+    // Determine the start of the time interval (e.g., 1:00, 2:00, etc.)
+    const intervalStart = getIntervalTimestamp(block.timestamp, interval);
+    const id = intervalStart.toHex() + "-" + interval;  // Unique ID based on interval start and type
+    let statisticsEntity = TimeFrameBetsMemoryStatistics.load(id);
+	const stat = Statistics.load(ID);
+
+    if (statisticsEntity == null) {
+        // If no entity exists for this interval, create a new one
+        statisticsEntity = new TimeFrameBetsMemoryStatistics(id);
+        statisticsEntity.totalPlayers = BigInt.fromI32(0);
+        statisticsEntity.totalMembers = BigInt.fromI32(0);
+        statisticsEntity.timestamp = intervalStart;
+        statisticsEntity.timeSeriesType = interval;
+    }
+
+
+
+    // Accumulate staking values
+    
+    statisticsEntity.totalMembers = pass.getMembersCount()
+	if(stat != null) {
+		statisticsEntity.totalPlayers = stat.totalPlayers;
+	} else {
+		statisticsEntity.totalPlayers = BigInt.fromI32(0);
+	}
+
+
+    // Save the updated entity
+    statisticsEntity.save();
+}
+
+
+
+export function handleHourBlock(block: ethereum.Block): void {
+    savePlayersStatistics(block, "hour");
+    savePlayersStatistics(block, "day");
+    savePlayersStatistics(block, "week");
 }

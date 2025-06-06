@@ -4,11 +4,13 @@
 		"codegen": "graph codegen",
 		"dev": "bun run codegen && bun run build:dev && bun run deploy:dev",
 		"prod": "bun run codegen && bun run build:prod && bun run deploy:prod",
-		"build:dev": "graph build --network polygon-amoy",
-		"build:prod": "graph build --network matic",
+		"prepare:dev": "bun mustache config/polygon-amoy.json template.subgraph.yaml > subgraph.yaml",
+		"prepare:prod": "bun mustache config/matic.json template.subgraph.yaml > subgraph.yaml",
+		"build:dev": "bun prepare:dev && graph build",
+		"build:prod": "bun prepare:prod && graph build",
 		"build:silent": "graph build",
-		"deploy:dev": "graph deploy --node https://api.studio.thegraph.com/deploy/ bets-memory-dev --network polygon-amoy",
-		"deploy:prod": "graph deploy --node https://api.studio.thegraph.com/deploy/ bets-memory-prod --network matic",
+		"deploy:dev": "graph deploy --node https://api.studio.thegraph.com/deploy/ bets-memory-dev",
+		"deploy:prod": "graph deploy --node https://api.studio.thegraph.com/deploy/ bets-memory-prod",
 		"test": "graph test"
 	},
 	"dependencies": {
@@ -16,6 +18,7 @@
 		"@graphprotocol/graph-ts": "^0.38.0"
 	},
 	"devDependencies": {
-		"matchstick-as": "^0.6.0"
+		"matchstick-as": "^0.6.0",
+		"mustache": "^4.2.0"
 	}
 }

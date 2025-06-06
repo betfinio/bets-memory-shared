@@ -1,0 +1,42 @@
+specVersion: 1.2.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BetsMemory
+    network: {{network}}
+    source:
+      abi: BetsMemory
+      address: "{{betsMemory.address}}"
+      startBlock: {{betsMemory.startBlock}}
+    context:
+      pass:
+        type: Bytes
+        data: "{{pass.address}}"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NewBet
+      abis:
+        - name: BetsMemory
+          file: ./abis/BetsMemory.json
+        - name: BetInterface
+          file: ./abis/BetInterface.json
+        - name: Pass
+          file: ./abis/Pass.json
+      blockHandlers:
+        - handler: handleOnce
+          filter:
+            kind: once
+        - handler: handleHourBlock
+          filter:
+            kind: polling
+            every: 1800
+      eventHandlers:
+        - event: NewBet(indexed address,indexed address,indexed address)
+          handler: handleNewBet
+      file: ./src/bets-memory.ts
