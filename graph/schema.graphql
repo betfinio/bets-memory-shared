@@ -5,7 +5,6 @@ type Bet @entity(immutable: true) {
     game: Bytes! # address
     status: BigInt!
     amount: BigInt!
-    result: BigInt!
     blockNumber: BigInt!
     blockTimestamp: BigInt!
     transactionHash: Bytes!

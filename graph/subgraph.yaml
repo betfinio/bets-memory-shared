@@ -6,15 +6,15 @@ schema:
 dataSources:
   - kind: ethereum
     name: BetsMemory
-    network: matic
+    network: polygon-amoy
     source:
       abi: BetsMemory
-      address: "0xbFC62dAc5Cc5A095F72311239a56E5d78b000777"
-      startBlock: 53904142
+      address: "0x23Fc05608ec5D1aEf7f676423Cc868D27D0226c9"
+      startBlock: 5932014
     context:
       pass:
         type: Bytes
-        data: "0xBF2E84403A7BcEA0b74Cdc1b580aE82397777777"
+        data: "0x171d4056Fe9f72Bec8E8C59C2e4dE32cFAaAd79e"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -29,9 +29,6 @@ dataSources:
         - name: Pass
           file: ./abis/Pass.json
       blockHandlers:
-        - handler: handleOnce
-          filter:
-            kind: once
         - handler: handleHourBlock
           filter:
             kind: polling
@@ -39,4 +36,8 @@ dataSources:
       eventHandlers:
         - event: NewBet(indexed address,indexed address,indexed address)
           handler: handleNewBet
+          calls:
+            betInfo: BetInterface[event.params.bet].getBetInfo()
+            
+
       file: ./src/bets-memory.ts
