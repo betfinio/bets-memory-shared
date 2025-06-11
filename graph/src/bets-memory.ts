@@ -46,7 +46,6 @@ function getOrCreatePlayer(playerAddress: Bytes, statistics: Statistics): Player
 function getIntervalTimestamp(timestamp: BigInt, interval: string): BigInt {
 	const intervalSeconds = INTERVALS.get(interval)
 	if (!intervalSeconds) {
-		log.warning("Unsupported interval: {}", [interval])
 		return timestamp
 	}
 	const intervalBigInt = BigInt.fromI32(intervalSeconds)

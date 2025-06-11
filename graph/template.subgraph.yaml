@@ -38,6 +38,4 @@ dataSources:
           handler: handleNewBet
           calls:
             betInfo: BetInterface[event.params.bet].getBetInfo()
-            
-
       file: ./src/bets-memory.ts
